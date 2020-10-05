@@ -16,7 +16,12 @@ public class SearchDataSource extends PageKeyedDataSource<Integer, MovieItem> {
 
     public static final int PAGE_SIZE = 5;
     private static final int FIRST_PAGE = 1;
-    public static final String SEARCH_QUERY ="";
+    public static String SEARCH_QUERY ="";
+
+    public SearchDataSource(String query)
+    {
+        SEARCH_QUERY = query;
+    }
 
     //this will be called once to load the initial data
     @Override

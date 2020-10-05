@@ -17,6 +17,7 @@ public class ItemViewModel extends ViewModel {
     public LiveData<PagedList<MovieItem>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, MovieItem>> liveDataSource;
 
+
     //constructor
     public ItemViewModel() {
         //getting our data source factory
@@ -35,4 +36,6 @@ public class ItemViewModel extends ViewModel {
         itemPagedList = (new LivePagedListBuilder(itemDataSourceFactory, pagedListConfig))
                 .build();
     }
+
+
 }

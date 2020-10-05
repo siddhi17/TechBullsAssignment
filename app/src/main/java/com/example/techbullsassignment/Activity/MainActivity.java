@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ItemViewModel itemViewModel;
     SearchViewModel searchViewModel;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         editTextSearch = findViewById(R.id.edit_search);
 
+        buttonSearch = findViewById(R.id.search_button);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
@@ -48,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         //creating the Adapter
         final ItemAdapter adapter = new ItemAdapter(this);
-
 
         //observing the itemPagedList from view model
         itemViewModel.itemPagedList.observe(this, new Observer<PagedList<MovieItem>>() {
@@ -64,27 +66,45 @@ public class MainActivity extends AppCompatActivity {
         //setting the adapter
         recyclerView.setAdapter(adapter);
 
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
+  /*      buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
+
+            }
+        });
+*/
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
                 //getting our ItemViewModel
                 searchViewModel = ViewModelProviders.of(MainActivity.this).get(SearchViewModel.class);
-
                 //observing the itemPagedList from view model
                 searchViewModel.itemPagedList.observe(MainActivity.this, new Observer<PagedList<MovieItem>>() {
                     @Override
                     public void onChanged(@Nullable PagedList<MovieItem> items) {
+
+                        searchViewModel.update(editTextSearch.getText().toString());
 
                         //in case of any changes
                         //submitting the items to adapter
                         adapter.submitList(items);
                     }
                 });
-
             }
         });
-
 
     }
 }

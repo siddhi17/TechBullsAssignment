@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity">
 
-
     <EditText
         android:id="@+id/edit_search"
         android:layout_width="259dp"
@@ -21,8 +20,9 @@
         app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toEndOf="@id/search_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"/>
+       <!-- android:afterTextChanged="@{(editable)->viewModel.afterTextChanged(editable)}"/>
+-->
     <Button
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
