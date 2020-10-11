@@ -1,5 +1,6 @@
 package com.example.techbullsassignment.ViewModels;
 
+import android.app.Application;
 import android.text.Editable;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
+import com.example.techbullsassignment.Activity.MainActivity;
 import com.example.techbullsassignment.Factorys.SearchDataSourceFactory;
 import com.example.techbullsassignment.ItemDataSource.ItemDataSource;
 import com.example.techbullsassignment.Models.MovieItem;
@@ -20,10 +22,18 @@ public class SearchViewModel extends ViewModel {
     public LiveData<PagedList<MovieItem>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, MovieItem>> liveDataSource;
     private String movie_query;
+    private Application mApplication;
+
+    public SearchViewModel(Application application, String query){
+        mApplication = application;
+        movie_query = query;
+    }
+
 
     //constructor
     public SearchViewModel() {
         //getting our data source factory
+        movie_query = MainActivity.movieItem.getSearch_query();
         SearchDataSourceFactory itemDataSourceFactory = new SearchDataSourceFactory(movie_query);
 
         //getting the live data source from data source factory

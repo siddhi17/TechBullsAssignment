@@ -1,9 +1,11 @@
 package com.example.techbullsassignment.Factorys;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
+import com.example.techbullsassignment.Activity.MainActivity;
 import com.example.techbullsassignment.ItemDataSource.ItemDataSource;
 import com.example.techbullsassignment.ItemDataSource.SearchDataSource;
 import com.example.techbullsassignment.Models.MovieItem;
@@ -22,6 +24,7 @@ public class SearchDataSourceFactory extends DataSource.Factory {
 
         @Override
         public DataSource<Integer, MovieItem> create() {
+
             //getting our data source object
             SearchDataSource itemDataSource = new SearchDataSource(movie_query);
 
@@ -37,4 +40,5 @@ public class SearchDataSourceFactory extends DataSource.Factory {
         public MutableLiveData<PageKeyedDataSource<Integer, MovieItem>> getItemLiveDataSource() {
             return itemLiveDataSource;
         }
+
 }

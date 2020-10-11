@@ -3,6 +3,7 @@ package com.example.techbullsassignment.Activity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.techbullsassignment.Adapters.ItemAdapter;
+import com.example.techbullsassignment.Factorys.SearchDataSourceFactory;
 import com.example.techbullsassignment.Models.MovieItem;
 import com.example.techbullsassignment.R;
 import com.example.techbullsassignment.ViewModels.ItemViewModel;
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonSearch;
     ItemViewModel itemViewModel;
     SearchViewModel searchViewModel;
-
+    public static MovieItem movieItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        //getting our ItemViewModel
+        //getting our 
         itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
 
         //creating the Adapter
@@ -66,15 +68,27 @@ public class MainActivity extends AppCompatActivity {
         //setting the adapter
         recyclerView.setAdapter(adapter);
 
-  /*      buttonSearch.setOnClickListener(new View.OnClickListener() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                movieItem = new MovieItem();
+                movieItem.search_query = editTextSearch.getText().toString();
 
+                //getting our ItemViewModel
+                searchViewModel = ViewModelProviders.of(MainActivity.this).get(SearchViewModel.class);
+                //observing the itemPagedList from view model
+                searchViewModel.itemPagedList.observe(MainActivity.this, new Observer<PagedList<MovieItem>>() {
+                    @Override
+                    public void onChanged(@Nullable PagedList<MovieItem> items) {
+                        //in case of any changes
+                        //submitting the items to adapter
+                        adapter.submitList(items);
+                    }
+                });
 
             }
         });
-*/
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -89,20 +103,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                //getting our ItemViewModel
-                searchViewModel = ViewModelProviders.of(MainActivity.this).get(SearchViewModel.class);
-                //observing the itemPagedList from view model
-                searchViewModel.itemPagedList.observe(MainActivity.this, new Observer<PagedList<MovieItem>>() {
-                    @Override
-                    public void onChanged(@Nullable PagedList<MovieItem> items) {
 
-                        searchViewModel.update(editTextSearch.getText().toString());
-
-                        //in case of any changes
-                        //submitting the items to adapter
-                        adapter.submitList(items);
-                    }
-                });
             }
         });
 
